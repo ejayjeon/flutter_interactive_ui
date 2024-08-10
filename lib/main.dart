@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:interactive_ui/screens/bouncing_card/bouncing_card.dart';
 import 'package:interactive_ui/screens/circle_checker.dart';
 
 void main() => runApp(const Main());
@@ -58,6 +59,11 @@ class _AppState extends State<App> {
             context: context,
             page: const CircleChecker(),
             title: "Circle Checker",
+          ),
+          _navigatorButton(
+            context: context,
+            page: const BouncingCard(),
+            title: "Bouncing Card",
           ),
         ],
       ),
