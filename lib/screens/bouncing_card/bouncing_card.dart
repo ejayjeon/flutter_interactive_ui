@@ -17,7 +17,6 @@ class _BouncingCardState extends State<BouncingCard>
   Offset offset = Offset.zero;
   @override
   int? get duration => 1000;
-  bool isFront = true;
 
   @override
   initAmination() {
@@ -28,8 +27,9 @@ class _BouncingCardState extends State<BouncingCard>
     //     curve: Curves.easeInOut,
     //   ),
     // );
-    animation =
-        Tween<double>(begin: -1.0, end: 1.0).animate(animationController);
+    animation = Tween<double>(begin: -1.0, end: 1.0).animate(
+      animationController,
+    );
   }
 
   @override
@@ -39,6 +39,8 @@ class _BouncingCardState extends State<BouncingCard>
       body: AnimatedBuilder(
         animation: animation,
         builder: (context, child) {
+          // 원의 반지름(-(180/12))의 -15도,
+          // 즉 반시계 방향으로 15도 회전하는 변환
           final angle = (-math.pi / 12) * animation.value;
           final transform = Matrix4.identity()
             ..setEntry(3, 2, 0.001)
