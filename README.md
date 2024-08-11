@@ -89,3 +89,70 @@ Alignment(
 
 
 [참고 | locked님 velog](https://velog.io/@locked/Flutter-%EA%B7%B8%EB%9D%BC%EB%8D%B0%EC%9D%B4%EC%85%98%EC%9C%BC%EB%A1%9C-%EB%A7%8C%EB%93%A4%EC%96%B4%EB%B3%B4%EB%8A%94-%EA%B4%91%EC%9B%90-%ED%9A%A8%EA%B3%BC)
+
+
+<br>
+
+## 3. Viewer Setting (1) : 글자 크기, 줄 간격, 좌우 여백, 문단 여백
+
+<img src="assets/images/video_3.gif" width="200" alt="Viewer Setting gif">
+<img src="assets/images/image_3.png" width="200" alt="Viewer Setting image">
+<img src="assets/images/image_4.png" width="200" alt="Viewer Setting image">
+
+
+
+- e-book 뷰어에 있는 간단하지만 유저를 위한 편의 기능인 뷰어 보기 설정을 만들어 보았다
+- 항상 참고하는 [looked님 블로그](https://velog.io/@locked/Flutter-%EB%B0%80%EB%A6%AC%EC%9D%98-%EC%84%9C%EC%9E%AC-%EB%94%B0%EB%9D%BC%ED%95%98%EA%B8%B0) 의 drawer floating 기능 부분에서 자연스러운 애니메이션 적용을 하는 것이 관건인데, 이 부분은 다음 파트에서 추가할 예정이다.
+- `GestureDetector`의 `onHorizontalUpdate` 파라미터로 반환받는 `details` 값을 활용한다면 터치나 드래그로 인한 변화를 다룰 때 유용하다. 
+
+(1) 상대적인 drag 기준(`details.delta.dx`): 드래그 변화량을 처리하고 싶을 때
+
+(2) 해당 영역의 절대적 영역 기준(`details.localPosition.dx`): 터치가 발생한 위치를 위젯 기준으로 처리하고 싶을 때
+
+(3) 디바이스의 절대 영역 기준(`details.globalPosition.dx`): 터치가 발생한 위치를 화면 전체 기준으로 처리하고 싶을 때
+
+- 컴포넌트 구성은 `localPosition`을 기준으로 `dragValue`를 구하고, 각각 몇 `min`, `max`, `step`을 설정해주었다.
+  
+```dart
+// custom_scroll_bar.dart
+
+  return GestureDetector(
+      onHorizontalDragUpdate: (DragUpdateDetails details) {
+        setState(() {
+          double dragValue = details.localPosition.dx;
+          _scrollValue = calculateSize(
+            dragValue: dragValue,
+            min: widget.min,
+            max: widget.max,
+            step: widget.step,
+          );
+          if (widget.onChanged != null) {
+            // 외부에서 받아서 처리
+            widget.onChanged!(_scrollValue);
+          }
+        });
+      },
+      ...
+  )
+```
+```dart
+// custom_scroll_bar.dart
+  double calculateSize({
+    required double dragValue,
+    required num step,
+    required double min,
+    required double max,
+  }) {
+    /// 몇 단계로 구성할 것인지 dragStep: 1 ~ 10단계로 구성
+    int dragStep = (dragValue / 10).round();
+
+    /// dragStep을 몇 스텝마다 나눌 것인지 설정 ex) 0.1 step -> 0.1, 0.2, 0.3 ...
+    double size = dragStep * step.toDouble();
+
+    if (size < min) size = min;
+    if (size > max) size = max;
+    return size;
+  }
+```
+
+[참고 | locked님 velog](https://velog.io/@locked/Flutter-%EB%B0%80%EB%A6%AC%EC%9D%98-%EC%84%9C%EC%9E%AC-%EB%94%B0%EB%9D%BC%ED%95%98%EA%B8%B0)

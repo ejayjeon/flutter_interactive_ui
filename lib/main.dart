@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:interactive_ui/screens/bouncing_card/bouncing_card.dart';
 import 'package:interactive_ui/screens/circle_checker.dart';
+import 'package:interactive_ui/screens/text_scale/text_scale.dart';
 
 void main() => runApp(const Main());
 
@@ -9,8 +11,11 @@ class Main extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: App(),
+    return MaterialApp(
+      theme: ThemeData(
+        canvasColor: Colors.transparent,
+      ),
+      home: const App(),
     );
   }
 }
@@ -64,6 +69,11 @@ class _AppState extends State<App> {
             context: context,
             page: const BouncingCard(),
             title: "Bouncing Card",
+          ),
+          _navigatorButton(
+            context: context,
+            page: const TextScale(),
+            title: "글자크기 조절 인터렉션",
           ),
         ],
       ),
