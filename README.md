@@ -156,3 +156,117 @@ Alignment(
 ```
 
 [참고 | locked님 velog](https://velog.io/@locked/Flutter-%EB%B0%80%EB%A6%AC%EC%9D%98-%EC%84%9C%EC%9E%AC-%EB%94%B0%EB%9D%BC%ED%95%98%EA%B8%B0)
+
+
+<br>
+
+## 4.Rolling Dice
+
+<img src="assets/images/video_4.gif" width="200" alt="Rolling Dice gif">
+
+3D 큐브는 이미 구현된 코드라, 이것을 보고 어떤 부분이 어떤 역할을 담당하는지 파악하는 것을 중점적으로 했다.
+
+
+1. 라디안(Radian) 측정
+   - 라디안은 회전의 각도를 측정할 때 사용하는 단위로, 수학적 단위인 pi를 주로 사용한다. 
+   - 180도 = 1pi 라디안 / 360도 = 2pi 라디안
+   - 큐브가 회전을 하므로, 회전 각도를 구해서 보여지는 x, y, z 면의 비율과 찌그러짐 정도(`rotate`)를 정한다
+
+2. _side 위젯 톺아보기
+```dart
+Widget _side({
+    bool moveZ = true, // 일정 기준에 따라 z축을 기준으로 움직일지 판단
+    double xRot = 0.0, // x축 로테이션
+    double yRot = 0.0, // y축 로테이션
+    double zRot = 0.0, // z축 로테이션
+    double shadow = 0.0, // 음영
+    required int number, // 보여질 주사위의 숫자 (커스텀)
+    required Color color, // 면의 색상 (커스텀)
+  }) {
+    return Transform(
+      alignment: Alignment.center,
+      transform: Matrix4.identity()
+        ..rotateX(xRot) // 입력받은 x축 로테대로 비틀고
+        ..rotateY(yRot) // 입력받은 y축 로테대로 비틀고
+        ..rotateZ(zRot) // 입력받은 z축 로테대로 비틀고
+        // ..setEntry(3, 2, 0.001)
+        ..translate(0.0, 0.0, moveZ ? -size / 2 : size / 2), // size는 외부에서 입력받는 값으로 한 면의 사이즈, moveZ 요건에 따라 이동
+      child: Container(
+        alignment: Alignment.center,
+        child: Container(
+          constraints: BoxConstraints.expand(width: size, height: size),
+          color: color,
+          padding: const EdgeInsets.all(18),
+          foregroundDecoration: BoxDecoration(
+            color: Colors.black.withOpacity(rainbow ? 0.0 : shadow),
+            border: Border.all(
+              width: 0.8,
+              color: rainbow ? color.withOpacity(0.3) : Colors.black26,
+            ),
+          ),
+          child: drawDiceDots(number), // 주사위 점
+        ),
+      ),
+    );
+  }
+```
+* 전체 코드는 `screens > rolling_dice.dart` 참고
+
+
+3. Rolling Animation
+- `AnimationController`를 자주 쓰기 때문에 mixin으로 만들어 두었는데, 웬걸 MultiTicker을 필요로 하는 바람에, 내장된 `TickersProviderMixin`을 이용했다.
+```dart
+  @override
+  void initState() {
+    super.initState();
+    initAmination();
+  }
+
+    @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+  
+
+ void initAmination() {
+    animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 2000),
+    );
+    animation = Tween<double>(begin: 0.0, end: pi * 2).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: Curves.easeInOut,
+      ),
+    );
+    animationY = Tween<double>(begin: 0.0, end: pi * 2).animate(
+      CurvedAnimation(
+        parent: animationController,
+        curve: Curves.easeInOut,
+      ),
+    );
+
+    animationController.addListener(() {
+      setState(() {
+        _x = animation.value;
+        _y = animationY.value;
+      });
+    });
+
+    animationController.addStatusListener((AnimationStatus status) {
+      if (status == AnimationStatus.completed) {
+        animationController.reverse();
+      } else if (status == AnimationStatus.dismissed) {
+        animationController.forward();
+      }
+    });
+  }
+```
+- 내가 봤을 때, 이 `pi * 2` 즉 360도 value 가 가장 안정적인 회전인 것 같다. 회전 각도를 달리하거나 회전 방향을 비틀고 싶으면 아래 코드에서 `end` 쪽을 랜덤하게 변경해도 된다.
+`animation = Tween<double>(begin: 0.0, end: pi * 2)`
+
+
+
+[참고 | 3D cube codepen](https://codepen.io/knezzz/pen/bGVqpzY)
+[참고 | locked님 velog](https://velog.io/@locked/Flutter-%EC%A3%BC%EC%82%AC%EC%9C%84%EB%A5%BC-%EA%B5%B4%EB%A0%A4%EB%B3%B4%EC%9E%90)

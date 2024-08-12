@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:interactive_ui/screens/bouncing_card/bouncing_card.dart';
-import 'package:interactive_ui/screens/circle_checker.dart';
+import 'package:interactive_ui/screens/circle_checker/circle_checker.dart';
+import 'package:interactive_ui/screens/rolling_dice.dart/cube.dart';
+import 'package:interactive_ui/screens/rolling_dice.dart/rolling_dice.dart';
 import 'package:interactive_ui/screens/text_scale/text_scale.dart';
 
 void main() => runApp(const Main());
@@ -74,6 +76,11 @@ class _AppState extends State<App> {
             context: context,
             page: const TextScale(),
             title: "글자크기 조절 인터렉션",
+          ),
+          _navigatorButton(
+            context: context,
+            page: const RollingDice(),
+            title: "주사위 굴리기",
           ),
         ],
       ),

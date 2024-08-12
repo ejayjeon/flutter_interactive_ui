@@ -26,12 +26,23 @@ class DefaultLayout extends StatelessWidget {
         key: scaffoldKey,
         backgroundColor: backgroundColor,
         drawerScrimColor: Colors.transparent,
-        appBar: appBar,
+        appBar: appBar ?? _appBar(),
         body: body,
         bottomNavigationBar: bottomNavigationBar,
         drawer: drawer,
         endDrawer: endDrawer,
       ),
+    );
+  }
+
+  AppBar _appBar() {
+    return AppBar(
+      backgroundColor: Colors.black,
+      foregroundColor: Colors.white,
+      // leading: const Icon(
+      //   Icons.arrow_back_ios,
+      //   color: Colors.white,
+      // ),
     );
   }
 }

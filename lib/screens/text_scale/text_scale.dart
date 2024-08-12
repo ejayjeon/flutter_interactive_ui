@@ -48,13 +48,6 @@ class _TextScaleState extends State<TextScale> with AnimationControllerMixin {
     // });
   }
 
-  AppBar _appBar() {
-    return AppBar(
-      backgroundColor: Colors.black,
-      foregroundColor: Colors.white,
-    );
-  }
-
   Drawer _drawer({
     required BuildContext context,
     required Color backgroundColor,
@@ -200,7 +193,6 @@ class _TextScaleState extends State<TextScale> with AnimationControllerMixin {
   Widget build(BuildContext context) {
     return DefaultLayout(
         scaffoldKey: drawerKey,
-        appBar: _appBar(),
         backgroundColor: Colors.black,
         body: FutureBuilder(
           future: loadData(),

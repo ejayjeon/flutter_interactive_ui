@@ -6,6 +6,7 @@ mixin AnimationControllerMixin<T extends StatefulWidget> on State<T>
     implements TickerProvider {
   late AnimationController _animationController;
   late Animation<double> animation;
+  late Animation<double> animationY;
   int? duration;
   Widget? animationChild;
   Ticker? _ticker;
