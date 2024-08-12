@@ -73,7 +73,7 @@ class _CircleCheckerState extends State<CircleChecker>
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      backgroundColor: Colors.black,
+      // backgroundColor: Colors.black,
       body: Center(
         child: AnimatedBuilder(
           animation: animation,

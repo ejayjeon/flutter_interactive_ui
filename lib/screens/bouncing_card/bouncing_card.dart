@@ -35,7 +35,6 @@ class _BouncingCardState extends State<BouncingCard>
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      backgroundColor: Colors.black,
       body: AnimatedBuilder(
         animation: animation,
         builder: (context, child) {

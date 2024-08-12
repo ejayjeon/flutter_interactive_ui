@@ -67,7 +67,8 @@ class CircleCheckerPainter extends CustomPainter {
           size.width / 2,
           size.height / 2,
         ),
-        1 + min(animationValue * size.width, size.width / 2),
+        // 1 + min(animationValue * size.width, size.width / 2),
+        size.width / 2,
         paint,
       );
     } else {

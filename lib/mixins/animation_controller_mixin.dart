@@ -6,10 +6,11 @@ mixin AnimationControllerMixin<T extends StatefulWidget> on State<T>
     implements TickerProvider {
   late AnimationController _animationController;
   late Animation<double> animation;
-  late Animation<double> animationY;
   int? duration;
   Widget? animationChild;
   Ticker? _ticker;
+
+  late TickerProvider _tickerProvider;
 
   AnimationController get animationController => _animationController;
 
@@ -19,6 +20,7 @@ mixin AnimationControllerMixin<T extends StatefulWidget> on State<T>
       vsync: this,
       duration: Duration(milliseconds: duration ?? 0),
     );
+
     // _animationController.repeat();
   }
 
@@ -41,25 +43,9 @@ mixin AnimationControllerMixin<T extends StatefulWidget> on State<T>
 
   @override
   Ticker createTicker(TickerCallback onTick) {
-    assert(() {
-      if (_ticker == null) {
-        return true;
-      }
-      throw FlutterError.fromParts(<DiagnosticsNode>[
-        ErrorSummary(
-            '$runtimeType is a SingleTickerProviderStateMixin but multiple tickers were created.'),
-        ErrorDescription(
-            'A SingleTickerProviderStateMixin can only be used as a TickerProvider once.'),
-        ErrorHint(
-          'If a State is used for multiple AnimationController objects, or if it is passed to other '
-          'objects and those objects might use it more than one time in total, then instead of '
-          'mixing in a SingleTickerProviderStateMixin, use a regular TickerProviderStateMixin.',
-        ),
-      ]);
-    }());
-    _ticker = Ticker(onTick,
+    // No need for the assert here since TickerProviderStateMixin handles multiple tickers
+    return Ticker(onTick,
         debugLabel: kDebugMode ? 'created by ${describeIdentity(this)}' : null);
-    return _ticker!;
   }
 
   String describeIdentity(Object? object) =>

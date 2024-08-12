@@ -74,7 +74,6 @@ class RollingDiceState extends State<RollingDice>
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      backgroundColor: Colors.black,
       body: Stack(
         children: <Widget>[
           ElevatedButton(

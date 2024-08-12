@@ -270,3 +270,21 @@ Widget _side({
 
 [참고 | 3D cube codepen](https://codepen.io/knezzz/pen/bGVqpzY)
 [참고 | locked님 velog](https://velog.io/@locked/Flutter-%EC%A3%BC%EC%82%AC%EC%9C%84%EB%A5%BC-%EA%B5%B4%EB%A0%A4%EB%B3%B4%EC%9E%90)
+
+
+
+
+## 5. Naver Green Dot (VUI) 동작
+[Naver Developers](https://developers.naver.com/docs/clova/client/Design/UI/Voice_User_Interface.md#GreenDot)
+
+일상생활에서 네이버 앱을 사용하면서 자연스럽게 지나쳤던 인터렉션들이 있다.
+음악 듣기나, 음성 듣기 혹은 버튼을 눌렀을 때 효과가 그렇다.
+자세한 가이드라인이 있어서, 인터렉티브 UI를 만들어보는 연습으로 구현해보기에 나쁘지 않아서 참고했다.
+
+
+(작업 중)
+|**입력 전**|**준비**|**대기(Waiting)**|
+|------|---|---|
+|테스트1|테스트2|테스트3|
+|**듣기(Listening)**|**분석/처리(Processing)**|**대답(Answering)**|
+|테스트1|테스트2|<img src="assets/images/video_5.gif" height="200">|

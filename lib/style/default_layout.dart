@@ -24,7 +24,7 @@ class DefaultLayout extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: backgroundColor,
+        backgroundColor: backgroundColor ?? Colors.black,
         drawerScrimColor: Colors.transparent,
         appBar: appBar ?? _appBar(),
         body: body,
