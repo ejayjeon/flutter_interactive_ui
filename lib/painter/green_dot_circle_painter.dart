@@ -4,14 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:interactive_ui/style/custom_color.dart';
 
 Paint createGreendotCirclePaint(
-    double width, double height, double animationValue) {
+    double width, double height, double animationValue,
+    [List<Color>? colors]) {
   return Paint()
-    ..shader = const LinearGradient(
-      colors: [
-        CustomColor.greendotGreen,
-        CustomColor.greendotMint,
-        CustomColor.greendotBlue,
-      ],
+    ..shader = LinearGradient(
+      colors: colors ??
+          [
+            CustomColor.greendotGreen,
+            CustomColor.greendotMint,
+            CustomColor.greendotBlue,
+          ],
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
     ).createShader(
@@ -28,5 +30,5 @@ Paint createGreendotCirclePaint(
     //       (1 - (animationValue) * 2) * 30,
     //       0,
     //     );
-    ..strokeWidth = width / 3;
+    ..strokeWidth = width / 2;
 }

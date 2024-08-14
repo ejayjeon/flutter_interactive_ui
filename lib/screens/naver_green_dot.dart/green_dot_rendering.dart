@@ -14,30 +14,7 @@ class GreenDotRendering extends StatefulWidget {
 
 class _GreenDotRenderingState extends State<GreenDotRendering>
     with AnimationControllerMixin {
-  double x = 180, y = 180;
   final size = const Size(180, 180);
-  static const double _shadow = 0.2, _halfPi = pi / 2, _oneHalfPi = pi + pi / 2;
-
-  double get _sum => (y + (x > pi ? pi : 0.0)).abs() % (pi * 2);
-
-  double _getShadow(double r) {
-    if (r < _halfPi) {
-      return map(r, 0, _halfPi, 0, _shadow);
-    } else if (r > _oneHalfPi) {
-      return _shadow - map(r, _oneHalfPi, pi * 2, 0, _shadow);
-    } else if (r < pi) {
-      return _shadow - map(r, _halfPi, pi, 0, _shadow);
-    }
-
-    return map(r, pi, _oneHalfPi, 0, _shadow);
-  }
-
-  double map(num value,
-          [num iStart = 0,
-          num iEnd = pi * 2,
-          num oStart = 0,
-          num oEnd = 1.0]) =>
-      ((oEnd - oStart) / (iEnd - iStart)) * (value - iStart) + oStart;
 
   @override
   void initState() {
@@ -60,6 +37,7 @@ class _GreenDotRenderingState extends State<GreenDotRendering>
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
+      backgroundColor: Colors.white,
       body: Center(
         child: AnimatedBuilder(
           animation: animation,
@@ -75,6 +53,7 @@ class _GreenDotRenderingState extends State<GreenDotRendering>
               ..setEntry(3, 2, 0.001)
               // ..rotateZ(0)
               ..rotateY(angle);
+
             return Transform(
               transform: transform,
               origin: size.center(Offset.zero),
