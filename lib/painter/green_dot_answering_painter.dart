@@ -1,40 +1,43 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:interactive_ui/painter/green_dot_circle_painter.dart';
 import 'package:interactive_ui/style/custom_color.dart';
 
-class GreenDotPainter extends CustomPainter {
+class GreenDotAnsweringPainter extends CustomPainter {
   final double animationValue;
-  GreenDotPainter(this.animationValue);
+  GreenDotAnsweringPainter(this.animationValue);
 
   @override
   void paint(Canvas canvas, Size size) {
     var width = size.width;
     var height = size.height;
-    final outterCircle = Paint()
-      ..shader = const LinearGradient(
-        colors: [
-          CustomColor.greendotGreen,
-          CustomColor.greendotMint,
-          CustomColor.greendotBlue,
-        ],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-      ).createShader(
-        Rect.fromLTWH(
-          0,
-          0,
-          width,
-          height,
-        ),
-      )
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = width / 3 +
-          max(
-            (1 - (animationValue) * 2) * 30,
-            0,
-          );
+    // final outterCircle = Paint()
+    //   ..shader = const LinearGradient(
+    //     colors: [
+    //       CustomColor.greendotGreen,
+    //       CustomColor.greendotMint,
+    //       CustomColor.greendotBlue,
+    //     ],
+    //     begin: Alignment.topLeft,
+    //     end: Alignment.bottomRight,
+    //   ).createShader(
+    //     Rect.fromLTWH(
+    //       0,
+    //       0,
+    //       width,
+    //       height,
+    //     ),
+    //   )
+    //   ..style = PaintingStyle.stroke
+    //   ..strokeWidth = width / 3 +
+    //       max(
+    //         (1 - (animationValue) * 2) * 30,
+    //         0,
+    //       );
 
+    final outterCircle =
+        createGreendotCirclePaint(width, height, animationValue);
     final shadowCircle = Paint()
       ..shader = RadialGradient(
         colors: [
@@ -115,7 +118,7 @@ class GreenDotPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(GreenDotPainter oldDelegate) {
+  bool shouldRepaint(GreenDotAnsweringPainter oldDelegate) {
     return oldDelegate.animationValue != animationValue;
   }
 }
