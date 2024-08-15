@@ -16,16 +16,15 @@
       ],
     },
     {
-      "name": "flutter_interactive_ui (profile mode)",
-      "request": "launch",
+      "name": "Flutter(집 ios)",
       "type": "dart",
-      "flutterMode": "profile"
+      "request": "launch",
+      "program": "lib/main.dart",
+      "args": [
+        "-d",
+        "C41290E1-9AEB-47F1-A2C9-8041EE1F51EE",
+        // "grep | -v 'D/EGL_emulation'", // iPhone 15 Plus
+      ],
     },
-    {
-      "name": "flutter_interactive_ui (release mode)",
-      "request": "launch",
-      "type": "dart",
-      "flutterMode": "release"
-    }
   ]
 }
